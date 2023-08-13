@@ -17,12 +17,12 @@ const roomName = params.roomName;
   const [newOrderQuantity, setNewOrderQuantity] = useState(1);
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/orders/${roomName}`)
+    axios.get(`${import.meta.env.VITE_BACKEND_API_URL}/orders/${roomName}`)
       .then(response => {
         setOrders(response.data);
       });
 
-    const ws = new WebSocket(`ws://localhost:3001/${roomName}`);
+    const ws = new WebSocket(`ws://${import.meta.env.VITE_BACKEND_API_HOST}/${roomName}`);
 
     ws.onmessage = (event: MessageEvent) => {
       const order: Order = JSON.parse(event.data);
@@ -48,7 +48,7 @@ const roomName = params.roomName;
       quantity: newOrderQuantity,
     };
 
-    axios.post(`http://localhost:3001/orders?roomName=${roomName}`, newOrder)
+    axios.post(`${import.meta.env.VITE_BACKEND_API_URL}/orders?roomName=${roomName}`, newOrder)
       .then(() => {
         setNewOrderName('');
         setNewOrderQuantity(1);
@@ -58,7 +58,7 @@ const roomName = params.roomName;
   const increaseQuantity = (orderId: string, currentQuantity: number) => {
     const updatedQuantity = currentQuantity + 1;
 
-    axios.put(`http://localhost:3001/orders/${orderId}`, { quantity: updatedQuantity })
+    axios.put(`${import.meta.env.VITE_BACKEND_API_URL}/orders/${orderId}`, { quantity: updatedQuantity })
     .then(() => {});
   };
 
