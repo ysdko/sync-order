@@ -8,12 +8,10 @@ interface Order {
   quantity: number;
 }
 
-interface RouteParams {
-  roomName: string;
-}
 
 const RoomScreen: React.FC = () => {
-  const { roomName } = useParams<RouteParams>();
+const params = useParams();
+const roomName = params.roomName;
   const [orders, setOrders] = useState<Order[]>([]);
   const [newOrderName, setNewOrderName] = useState('');
   const [newOrderQuantity, setNewOrderQuantity] = useState(1);
@@ -61,10 +59,7 @@ const RoomScreen: React.FC = () => {
     const updatedQuantity = currentQuantity + 1;
 
     axios.put(`http://localhost:3001/orders/${orderId}`, { quantity: updatedQuantity })
-      .then(response => {
-        // 更新が成功したら、WebSocket経由で変更が他のクライアントにも通知されるため、
-        // ここでの追加の処理は不要です。
-      });
+    .then(() => {});
   };
 
   return (
