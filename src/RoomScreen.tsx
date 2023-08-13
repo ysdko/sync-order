@@ -22,7 +22,7 @@ const roomName = params.roomName;
         setOrders(response.data);
       });
 
-    const ws = new WebSocket(`ws://${import.meta.env.VITE_BACKEND_API_HOST}/${roomName}`);
+    const ws = new WebSocket(`wss://${import.meta.env.VITE_BACKEND_API_HOST}/${roomName}`);
 
     ws.onmessage = (event: MessageEvent) => {
       const order: Order = JSON.parse(event.data);
