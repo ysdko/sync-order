@@ -10,11 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@types/uuid": "^9.0.2",
     "axios": "^1.4.0",
     "qrcode.react": "^3.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.15.0"
+    "react-router-dom": "^6.15.0",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@types/node": "^20.4.10",
