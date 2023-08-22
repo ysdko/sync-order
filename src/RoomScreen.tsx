@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import QRCode from 'qrcode.react';
 // import './RoomScreen.css'; 
 interface Order {
   _id?: string;
@@ -15,6 +16,8 @@ const roomName = params.roomName;
   const [orders, setOrders] = useState<Order[]>([]);
   const [newOrderName, setNewOrderName] = useState('');
   const [newOrderQuantity, setNewOrderQuantity] = useState(1);
+  const [showQRCode, setShowQRCode] = useState(false);
+  const toggleQRCode = () => setShowQRCode(!showQRCode);
 
   useEffect(() => {
     axios.get(`${import.meta.env.VITE_BACKEND_API_URL}/orders/${roomName}`)
@@ -64,6 +67,31 @@ const roomName = params.roomName;
 
   return (
     <div>
+      <button onClick={toggleQRCode}>QRコードを表示</button>  {/* 追加 */}
+      
+      {showQRCode && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          backgroundColor: 'rgba(0,0,0,0.8)',
+          zIndex: 1000,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}>
+          <div style={{
+            backgroundColor: 'white',
+            padding: '20px',
+            boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)'
+          }}>
+          <QRCode value={window.location.href} />
+          <button onClick={toggleQRCode}>閉じる</button>
+          </div>
+        </div>
+      )}
       <h1>Room: {roomName}</h1>
       {orders.map(order => (
         <div key={order._id}>
